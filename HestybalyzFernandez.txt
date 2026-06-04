@@ -1,0 +1,76 @@
+"""
+Determinar la ACELERACIÓN de un objeto considerando que la aceleración es el cambio de la velocidad con respecto al tiempo.
+Se realizaran 5 graficas de aceleración variando el valor de r 
+    (preguntando al usuario y las unidades que puede ingresar pueden ser m o plg, pero reguiere que sean en mm para pasar por la formula)
+y sera mostrado en una sola ventana.
+El tipo de color de línea se debera preguntar
+
+Finalmente, se debe preguntar al usuario si desea conocer la velocidad de un valor en especifico de theta
+"""
+
+from sympy import symbols, diff, sin, cos, sqrt, lambdify
+import numpy as np
+import matplotlib.pyplot as plt
+
+dt, theta = symbols('dt, theta')
+m = 1000 #mm
+plg = 25.4 #mm
+# theta = np.arange(-4 * np.pi, 4 * np.pi, np.pi) # inicio, fin, steps
+# theta = np.pi 
+dt = np.linspace(0, 0.001, 500) # tiempo
+a = 44000 #mm
+graph = 0
+
+while True:
+    r_str = ''
+    r_str = str(input('Ingrese el valor de r: '))
+
+    if r_str.endswith('plg'):       # TRANSFORMAR PULGADAS
+        r_str = r_str.split(' ')
+        r = float(r_str[0])
+        print('Valor ingresado en plg: ',r_str[0])
+
+        r = r * plg
+        print('Conversion a mm: ', r, 'mm')
+
+    elif r_str.endswith('m'):       # TRANSFORMAR METROS
+        r_str = r_str.split(' ')
+        r = float(r_str[0])
+        print('Valor ingresado en m: ',r_str[0])
+
+        r = r * m
+        print('Conversion a mm: ', r, 'mm')
+
+    else:
+        r = float(r_str)
+        print('Valor de r: ', r, 'mm')
+
+    v = ((-a * sin(theta) + ((-a**2 * sin(theta) * cos(theta) ))) / sqrt(r**2 - a**2 * (sin(theta) * sin(theta))))
+
+    expresion = lambdify(theta, v, 'numpy')
+
+    aceleracion = diff(expresion, dt)
+    # aceleracion = diff(v, dt)
+    
+    rgb = str(input('Asigne un color: '))
+    rgb = "'" + rgb + "'"
+    print(rgb, 'grafica ', graph+1)
+
+    plt.plot(dt, expresion, linestyle = '-', color=rgb)
+    # plt.plot(dt, aceleracion, linestyle = '-', color='red')
+
+    respuesta = str(input('¿Desea conocer la velocidad en un valor especifico de theta? '))
+    theta2 = float(input('Ingrese el valor de theta: '))
+
+    if respuesta.endswith('si'):
+        velocidad = ((-a * sin(theta2) + ((-a**2 * sin(theta2) * cos(theta2) ))) / sqrt(r**2 - a**2 * (sin(theta) * sin(theta))))
+        print('La velocidad en "', theta2, '" es de: ', velocidad)
+    else:
+        break
+
+    graph += 1
+
+    if graph == 5:
+        break
+
+plt.show()
