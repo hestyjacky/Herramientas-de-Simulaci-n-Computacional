@@ -40,6 +40,7 @@ print('Proyección de r sobre w: ', proj_r)
 # PRODUCTO CRUZ
 #  -----------   3) EJEMPLO 3: find the volume of the parallelepiped with sides
 # v = a . (b x c)
+"""
 import numpy as np
 
 a = np.array([2,0,1])
@@ -61,7 +62,7 @@ matriz_a = np.array([[1, 2, 3],
                       [7, 8, 9]])
 resultado = np.dot(identity_matrix, matriz_a)
 print('Resultado de multiplicar la matriz de identidad por matriz_a: \n', resultado)
-
+"""
 #  -----------   5) Ejercicio:
 """
 A mass m is suspended by three cables attached tat three points B, C, and D, as shown in figure #. 
@@ -75,4 +76,26 @@ T1/sqrt(35) + 3*T2/sqrt(34) + T3/sqrt(42) = 0
 5*T1/sqrt(35) + 5*T2/sqrt(34) + 5*T3/sqrt(42) - m*g = 0
                                                 -> paso el valor de m*g a la derecha de la ecuación
 
+A = 1/sqrt(35), - 3/sqrt(34), 1/sqrt(42)
+    3/sqrt(35), 0, -4/sqrt(42)
+    5/sqrt(35), 5/sqrt(34), 5/sqrt(42)   
+
+t = T1
+    T2
+    T3
+
+B = 0
+    0
+    m*g
 """
+import numpy as np
+
+m = 1
+g = 9.81
+A = np.array([[1/np.sqrt(35), - 3/np.sqrt(34), 1/np.sqrt(42)],
+              [3/np.sqrt(35), 0, -4/np.sqrt(42)],
+              [5/np.sqrt(35), 5/np.sqrt(34), 5/np.sqrt(42)]], dtype=float)
+B = np.array([[0], [0], [m * g]], dtype=float)
+c = np.linalg.solve(A, B)
+print('Tensiones en las cables: ', c)
+
