@@ -6,6 +6,8 @@ y sera mostrado en una sola ventana.
 El tipo de color de línea se debera preguntar
 
 Finalmente, se debe preguntar al usuario si desea conocer la velocidad de un valor en especifico de theta
+
+Intentar r con: 45m, 50m, 60m, 2000plg, 70000mm
 """
 
 from sympy import symbols, diff, sin, cos, sqrt, lambdify
