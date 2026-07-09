@@ -45,9 +45,8 @@ f = (2*x**2) + 5
 calcular_f = lambdify(x, f, 'numpy')
 
 for i in range(1,5):
-    valores_f = calcular_f(h) 
-    # print(valores_f)
-    h += .5
+    valores_f = calcular_f(a + i*h) 
+    print(valores_f)
 
 """
 --------------------------------------- EJERCICIO 3 - regla del trapecio

@@ -58,8 +58,8 @@ calcular_f = lambdify(x, f, 'numpy')
 suma = calcular_f(a) + calcular_f(b)  # Extremos f(a) y f(b)
 
 # ciclo para la regla de simpson 
-#   pares x 4
-#   impares x 2
+#   pares x 2
+#   impares x 4
 for i in range(1,n):
     punto_x =  a + i*h
     if i % 2 == 0: # PAR
