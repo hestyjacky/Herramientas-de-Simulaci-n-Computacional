@@ -237,73 +237,37 @@ plt.tight_layout()
 plt.show()
 """
 
+# METODO NEWTON-RAPHSON
+"""
+5*x + log(x) - 10000
+
+x_new = x_old - f(x_old)/f'(x_old)
+
+# Parámetros iniciales
+xo = 1
+tolerancia = 0.01  # 0.01%
+error = 100.0      # Error inicial
+iteracion = 1
+"""
 print('\nNEWTON-RAPHSON ' + '-' * 20)
 from sympy import symbols, diff, log, lambdify, exp
-import matplotlib.pyplot as plt
-import numpy as np
 
 x = symbols('x')
-# Usamos la segunda función para que la gráfica sea visible en un rango pequeño
-f_simbolica = exp(2*x) - x - 6
+f_simbolica = 5*x + log(x) - 10000
+##f_simbolica = exp(2*x) - x - 6
 df_simbolica = diff(f_simbolica, x)
 
 f = lambdify(x, f_simbolica, 'numpy')
 df = lambdify(x, df_simbolica, 'numpy')
 
-xo = 2.0  # Cambiado a 2 para ver bien el "viaje" de las tangentes hacia la izquierda
+xo = 1
 tolerancia = 0.001
 error = 100.0
-
-# Listas para guardar el historial de puntos y graficarlos después
-historial_x = [xo]
 
 while error >= tolerancia:
     x_new = xo - (f(xo) / df(xo))
     x_new = float(x_new)
     
     error = abs((x_new - xo) / x_new) * 100
-    print(f"Raíz aproximada: {x_new:.6f} | Error: {error:.4f}%")
-    
-    historial_x.append(x_new)
+    print(f"{x_new:.6f}\t{error:.6f}%")
     xo = x_new
-
-# ==========================================
-# GRAFICAR LA FUNCIÓN Y LAS TANGENTES
-# ==========================================
-# Creamos un rango dinámico basado en los puntos que tocó el método
-x_vals = np.linspace(min(historial_x) - 0.5, max(historial_x) + 0.5, 200)
-y_vals = f(x_vals)
-
-plt.figure(figsize=(9, 6))
-plt.plot(x_vals, y_vals, label='f(x) = e^(2x) - x - 6', color='blue', linewidth=2)
-
-# Dibujar las líneas tangentes de cada iteración
-for i in range(len(historial_x) - 1):
-    x_actual = historial_x[i]
-    x_siguiente = historial_x[i+1]
-    
-    # 1. Punto sobre la curva: (x_actual, f(x_actual))
-    plt.scatter(x_actual, f(x_actual), color='red', zorder=5)
-    
-    # 2. Línea vertical desde el eje X hacia la curva
-    plt.plot([x_actual, x_actual], [0, f(x_actual)], color='gray', linestyle=':', alpha=0.7)
-    
-    # 3. Línea tangente que va desde la curva hasta intersectar el eje X en x_siguiente
-    plt.plot([x_actual, x_siguiente], [f(x_actual), 0], color='orange', linestyle='--', linewidth=1.5, 
-             label='Línea Tangente' if i == 0 else "")
-    
-    # Texto para identificar la iteración
-    plt.text(x_actual, f(x_actual) + 1, f'x{i}', fontsize=10, weight='bold', color='darkred')
-
-# Dibujar el punto final (la raíz encontrada)
-plt.scatter(historial_x[-1], 0, color='green', marker='*', s=150, zorder=6, label='Raíz Detectada')
-
-# Configuración estética de la gráfica
-plt.axhline(0, color='black', linewidth=1)
-plt.axvline(0, color='black', linewidth=1)
-plt.title('Visualización Dinámica de Newton-Raphson', fontsize=12, fontweight='bold')
-plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.grid(True, alpha=0.3)
-plt.legend()
-plt.show()
