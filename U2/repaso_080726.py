@@ -84,7 +84,8 @@ integral_real = integrate(f_simbolica, (x, a, b))
 print(f'Valor real de la integral: {float(integral_real):.4f}')
 
 
-""" PARA VISUALIZAR LOS MÉTODOS DE INTEGRACIÓN NUMÉRICA
+""" 
+PARA VISUALIZAR LOS MÉTODOS DE INTEGRACIÓN NUMÉRICA
 Se implementan los métodos de integración numérica: regla del rectángulo, regla del trapecio y regla de Simpson (1/3 y 3/8) para la función f(x) = sqrt(4 + x**3) en el intervalo [0, 3] con n=6 subintervalos.
 Se generan gráficos que muestran la función original y las aproximaciones de cada método, junto con el área calculada por cada uno. Además, se imprime un resumen compacto de los resultados en la consola.
 
@@ -235,3 +236,38 @@ print("-" * 30)
 plt.tight_layout()
 plt.show()
 """
+
+# METODO NEWTON-RAPHSON
+"""
+5*x + log(x) - 10000
+
+x_new = x_old - f(x_old)/f'(x_old)
+
+# Parámetros iniciales
+xo = 1
+tolerancia = 0.01  # 0.01%
+error = 100.0      # Error inicial
+iteracion = 1
+"""
+print('\nNEWTON-RAPHSON ' + '-' * 20)
+from sympy import symbols, diff, log, lambdify, exp
+
+x = symbols('x')
+f_simbolica = 5*x + log(x) - 10000
+##f_simbolica = exp(2*x) - x - 6
+df_simbolica = diff(f_simbolica, x)
+
+f = lambdify(x, f_simbolica, 'numpy')
+df = lambdify(x, df_simbolica, 'numpy')
+
+xo = 1
+tolerancia = 0.001
+error = 100.0
+
+while error >= tolerancia:
+    x_new = xo - (f(xo) / df(xo))
+    x_new = float(x_new)
+    
+    error = abs((x_new - xo) / x_new) * 100
+    print(x_new)
+    xo = x_new
