@@ -1,0 +1,16 @@
+
+""" EVALUACIÓN PARA UNIDAD 3
+    PARTE 1
+abrir archivo de texto
+revisar espacios vacios
+si en ese caso, hacer interpolacion o extrapolacion
+graficar los datos originales y los interpolados
+- grafica de scatter? puros puntos
+- grafico de barras? para ver la diferencia entre los datos originales y los interpolados
+- grafica polar? Opción para datos angulares
+
+
+    PARTE 2
+trabajar con dos variables, dentro del tema de newton-rapson (initial guess)
+porque el profe nos dará más de una ecuacion
+"""
