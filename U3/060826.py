@@ -1,4 +1,5 @@
 """
+Checar en el cuaderno de notas y repasar !!
 newton-rapson (initial guess) con varias variables
 
 f1 (x,y,z) =    x**2 + y**2 + z**2 - 1  = 0
@@ -92,7 +93,7 @@ print("\n" + "-" * 20)
 """ ESTO FUE MANUAL, AHORA HAY QUE HACERLO AUTOMATICO CON UN CICLO WHILE"""
 
 # -- Calcular el siguiente punto usando la fórmula de Newton-Raphson
-tolerance = 1e-4
+tolerance = 1e-4 # 0.0001
 max_iterations = 100
 iteration = 0
 
@@ -124,7 +125,8 @@ while iteration < max_iterations:
 
     # Verificar la convergencia
     if np.linalg.norm(X1 - X0) < tolerance:
-        print(f"Convergencia alcanzada después de {iteration + 1} iteraciones.")
+        print("" + "-" * 20)
+        print(f"\nConvergencia alcanzada después de {iteration + 1} iteraciones.")
         break
 
     # Actualizar el punto actual para la siguiente iteración
